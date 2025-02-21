@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ByBo - Welcome</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #8e44ad, #3498db, #1abc9c);
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            animation: changeBackground 2.5s infinite alternate;
+        }
+
+        .container {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+
+        .logo {
+            font-size: 4em;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            animation: glow 2.5s infinite alternate, float 3s ease-in-out infinite;
+        }
+
+        .welcome-text {
+            font-size: 2em;
+            color: white;
+            margin-top: 10px;
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+
+        .loading-container {
+            position: relative;
+            width: 280px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .loading-bar {
+            width: 0;
+            height: 100%;
+            background: white;
+            animation: fillLoading 4s linear forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.8);
+            }
+
+            100% {
+                text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 40px rgba(255, 255, 255, 1);
+            }
+        }
+
+        @keyframes changeBackground {
+            0% {
+                background: linear-gradient(135deg, #8e44ad, #3498db, #1abc9c);
+            }
+
+            50% {
+                background: linear-gradient(135deg, #3498db, #1abc9c, #8e44ad);
+            }
+
+            100% {
+                background: linear-gradient(135deg, #1abc9c, #8e44ad, #3498db);
+            }
+        }
+
+        @keyframes fillLoading {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+    </style>
+    <script>
+        setTimeout(function () {
+            window.location.href = "main.html";
+        }, 4000);
+    </script>
+</head>
+<body>
+    <link rel="icon" type="image/png" href="photos/icon.png">
+    <link rel="shortcut icon" type="image/png" href="photos/icon.png">
+
+    <div class="container">
+        <div class="logo">ByBo</div>
+        <h1 class="welcome-text">Welcome to ByBo</h1>
+        <div class="loading-container">
+            <div class="loading-bar"></div>
+        </div>
+    </div>
+</body>
+</html>

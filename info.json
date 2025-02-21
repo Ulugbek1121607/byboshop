@@ -1,0 +1,12 @@
+[
+  {
+    "username": "user1",
+    "products": [
+      {
+        "name": "Product 1",
+        "description": "Description of Product 1",
+        "image_path": "photos/product1.jpg"
+      }
+    ]
+  }
+]

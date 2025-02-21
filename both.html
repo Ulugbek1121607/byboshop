@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - ByBo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #8e44ad, #3498db, #1abc9c);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .register-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            width: 340px;
+            text-align: center;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: popUp 0.8s ease forwards;
+        }
+
+        @keyframes popUp {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .register-container::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: conic-gradient(from 180deg, #8e44ad, #3498db, #1abc9c, #8e44ad);
+            animation: rotate 5s linear infinite;
+            top: -50%;
+            left: -50%;
+            z-index: -1;
+            border-radius: 50%;
+            filter: blur(40px);
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .register-container h2 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+            .tab-buttons button {
+                background: none;
+                border: none;
+                color: #fff;
+                font-size: 1.1em;
+                cursor: pointer;
+                padding: 10px 0;
+                position: relative;
+                transition: 0.4s ease;
+            }
+
+                .tab-buttons button.active {
+                    color: #1abc9c;
+                }
+
+                .tab-buttons button::after {
+                    content: '';
+                    position: absolute;
+                    width: 0%;
+                    height: 3px;
+                    background-color: #1abc9c;
+                    bottom: 0;
+                    left: 50%;
+                    transition: all 0.4s ease;
+                }
+
+                .tab-buttons button.active::after,
+                .tab-buttons button:hover::after {
+                    width: 100%;
+                    left: 0;
+                }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+            .tab-content.active {
+                display: block;
+            }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .register-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            transition: 0.3s ease;
+        }
+
+            .register-container input::placeholder {
+                color: rgba(255, 255, 255, 0.7);
+            }
+
+            .register-container input:focus {
+                outline: none;
+                background: rgba(255, 255, 255, 0.3);
+                box-shadow: 0 0 10px rgba(26, 188, 156, 0.7);
+            }
+
+        .register-container button {
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            width: 100%;
+            transition: 0.3s ease;
+            box-shadow: 0 0 15px rgba(26, 188, 156, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+            .register-container button:hover {
+                background-color: #16a085;
+                transform: translateY(-3px);
+            }
+
+            .register-container button::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle, rgba(255,255,255,0.2) 10%, transparent 10%);
+                background-size: 10px 10px;
+                animation: shine 4s linear infinite;
+                pointer-events: none;
+            }
+
+        @keyframes shine {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50%, 50%);
+            }
+        }
+
+        .register-container a {
+            text-decoration: none;
+            color: #1abc9c;
+            font-size: 0.9em;
+            display: block;
+            margin-top: 12px;
+            transition: 0.3s ease;
+        }
+
+            .register-container a:hover {
+                color: #16a085;
+                text-shadow: 0 0 8px rgba(26, 188, 156, 0.7);
+            }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Profilga Kirish</h2>
+        <div class="tab-buttons">
+            <button id="login-tab" class="active">Login</button>
+            <button id="register-tab">Registration</button>
+        </div>
+
+        <div id="login-content" class="tab-content active">
+            <input type="text" id="login-username" placeholder="Username">
+            <input type="password" id="login-password" placeholder="Password">
+            <button onclick="login()">Kirish</button>
+            <a href="index.html">Orqaga qaytish</a>
+        </div>
+
+        <div id="register-content" class="tab-content">
+            <input type="text" id="register-username" placeholder="Username">
+            <input type="email" id="register-email" placeholder="Email">
+            <input type="password" id="register-password" placeholder="Password">
+            <button onclick="register()">Ro'yxatdan o'tish</button>
+            <a href="index.html">Orqaga qaytish</a>
+        </div>
+    </div>
+
+    <script>
+        // Tab funksiyasi
+        const loginTab = document.getElementById('login-tab');
+        const registerTab = document.getElementById('register-tab');
+        const loginContent = document.getElementById('login-content');
+        const registerContent = document.getElementById('register-content');
+
+        loginTab.addEventListener('click', () => {
+            loginTab.classList.add('active');
+            registerTab.classList.remove('active');
+            loginContent.classList.add('active');
+            registerContent.classList.remove('active');
+        });
+
+        registerTab.addEventListener('click', () => {
+            registerTab.classList.add('active');
+            loginTab.classList.remove('active');
+            registerContent.classList.add('active');
+            loginContent.classList.remove('active');
+        });
+
+        // Registratsiya funksiyasi
+        function register() {
+            const username = document.getElementById('register-username').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+
+            const user = {
+                username,
+                email,
+                password
+            };
+
+            fetch('/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.success) {
+                        window.location.href = "main.html";
+                    }
+                })
+                .catch(error => console.error('Xatolik:', error));
+        }
+
+        // Login funksiyasi
+        function login() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.success) {
+                        window.location.href = "sell.html";
+                    }
+                })
+                .catch(error => console.error('Xatolik:', error));
+        }
+    </script>
+</body>
+</html>

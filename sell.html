@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell - ByBo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #8e44ad, #3498db, #1abc9c);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sell-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            width: 340px;
+            text-align: center;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+            .sell-container h2 {
+                color: #fff;
+                margin-bottom: 20px;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+
+            .sell-container input {
+                width: 100%;
+                padding: 12px;
+                margin: 12px 0;
+                border: none;
+                border-radius: 8px;
+                font-size: 1em;
+                background: rgba(255, 255, 255, 0.2);
+                color: #fff;
+                transition: 0.3s ease;
+            }
+
+                .sell-container input::placeholder {
+                    color: rgba(255, 255, 255, 0.7);
+                }
+
+                .sell-container input:focus {
+                    outline: none;
+                    background: rgba(255, 255, 255, 0.3);
+                    box-shadow: 0 0 10px rgba(26, 188, 156, 0.7);
+                }
+
+            .sell-container button {
+                background-color: #1abc9c;
+                color: white;
+                border: none;
+                padding: 12px 20px;
+                border-radius: 25px;
+                cursor: pointer;
+                font-size: 1em;
+                width: 100%;
+                transition: 0.3s ease;
+                box-shadow: 0 0 15px rgba(26, 188, 156, 0.5);
+            }
+
+                .sell-container button:hover {
+                    background-color: #16a085;
+                    transform: translateY(-3px);
+                }
+    </style>
+</head>
+<body>
+    <div class="sell-container">
+        <h2>Mahsulot Qo'shish</h2>
+        <input type="text" id="product-name" placeholder="Mahsulot nomi">
+        <input type="text" id="product-description" placeholder="Mahsulot tavsifi">
+        <input type="file" id="product-image" accept=".jpg, .jpeg, .png">
+        <button onclick="addProduct()">Qo'shish</button>
+    </div>
+
+    <script>
+        function addProduct() {
+            const name = document.getElementById('product-name').value.trim();
+            const description = document.getElementById('product-description').value.trim();
+            const imageInput = document.getElementById('product-image');
+            const imageFile = imageInput.files[0];
+
+            if (!name || !description || !imageFile) {
+                alert('Barcha maydonlarni to‘ldiring!');
+                return;
+            }
+
+            const validImageTypes = ['image/jpeg', 'image/png'];
+            if (!validImageTypes.includes(imageFile.type)) {
+                alert('Faqat JPG va PNG formatdagi rasmlarni yuklash mumkin!');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('image', imageFile, "phtos/" + imageFile.name);
+
+            fetch('http://localhost:3000/api/products', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        alert("Mahsulot muvaffaqiyatli qo‘shildi!");
+                        window.location.href = "main.html";
+                    }
+                })
+                .catch(error => console.error('Xatolik:', error));
+        }
+    </script>
+</body>
+</html>

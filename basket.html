@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basket - ByBo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #8e44ad, #3498db, #1abc9c);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .basket-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            width: 360px;
+            text-align: center;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+            .basket-container h2 {
+                color: #fff;
+                margin-bottom: 20px;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+
+        .basket-list {
+            list-style: none;
+            padding: 0;
+            max-height: 200px;
+            overflow-y: auto; /* Scroll qoshildi */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+            .basket-list li {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                color: #fff;
+                margin-bottom: 10px;
+                padding: 8px;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 10px;
+            }
+
+            .basket-list img {
+                width: 50px;
+                height: 50px;
+                border-radius: 5px;
+                margin-right: 10px;
+            }
+
+        .remove-btn {
+            background: #e74c3c;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+            .remove-btn:hover {
+                background: #c0392b;
+            }
+    </style>
+</head>
+<body>
+    <div class="basket-container">
+        <h2>Savat</h2>
+        <ul id="basket-list" class="basket-list">
+            <!-- Savatdagi mahsulotlar shu yerga yuklanadi -->
+        </ul>
+    </div>
+
+    <script>
+        function loadBasket() {
+            fetch('/api/basket')
+                .then(response => response.json())
+                .then(products => {
+                    const basketList = document.getElementById('basket-list');
+                    basketList.innerHTML = "";
+                    products.forEach(product => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `
+                                    <div style="display: flex; align-items: center;">
+                                        <img src="${product.image_path}" alt="${product.name}">
+                                        <span>${product.name} - ${product.description}</span>
+                                    </div>
+                                    <button class="remove-btn" onclick="removeFromBasket('${product.id}')">🗑</button>
+                                `;
+                        basketList.appendChild(li);
+                    });
+                })
+                .catch(error => console.error('Xatolik:', error));
+        }
+
+        function removeFromBasket(productId) {
+            fetch(`/api/basket/${productId}`, { method: 'DELETE' })
+                .then(response => {
+                    if (response.ok) {
+                        loadBasket(); // O‘chirilgandan keyin yangilash
+                    }
+                })
+                .catch(error => console.error('Xatolik:', error));
+        }
+
+        loadBasket();
+    </script>
+</body>
+</html>
