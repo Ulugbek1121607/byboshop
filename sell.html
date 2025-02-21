@@ -105,7 +105,7 @@
             const formData = new FormData();
             formData.append('name', name);
             formData.append('description', description);
-            formData.append('image', imageFile, "phtos/" + imageFile.name);
+            formData.append('image', imageFile);
 
             fetch('http://localhost:3000/api/products', {
                 method: 'POST',
